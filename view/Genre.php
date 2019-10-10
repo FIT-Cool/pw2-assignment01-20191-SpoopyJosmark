@@ -1,16 +1,22 @@
 <?php
+$genreDao = new GenreDao();
+
 // Block below for delete
 $deleteCommand = filter_input(INPUT_GET, 'delcom');
 if(isset($deleteCommand) && $deleteCommand == 1){
     $id = filter_input(INPUT_GET, 'id');
-    deleteGenre($id);
+    $genre = new Genre();
+    $genre->setId($id);
+    $genreDao->deleteGenre($genre);
 }
 
 // Block below for insert
 $submitted =filter_input(INPUT_POST,'btnSubmit');
 if(isset($submitted)){
     $name=filter_input(INPUT_POST,'txtName');
-    addGenre($name);
+    $genre = new Genre();
+    $genre->setName($name);
+    $genreDao->addGenre($genre);
 }
 ?>
 <form method="post">
@@ -33,12 +39,13 @@ if(isset($submitted)){
     </thead>
     <tbody>
     <?php
-    $genres = getAllGenre();
+    $genres = $genreDao->getAllGenre();
+    /* @var $genre Genre */
     foreach ($genres as $genre) {
         echo '<tr>';
-        echo '<td>' . $genre['id'] . '</td>';
-        echo '<td>' . $genre['name'] . '</td>';
-        echo '<td><button onclick="updateGenre('.$genre['id'].')">Edit</button><button onclick="deleteGenre('.$genre['id'].')">Delete</button></td>';
+        echo '<td>' . $genre->getId() . '</td>';
+        echo '<td>' . $genre->getName() . '</td>';
+        echo '<td><button onclick="updateGenre('.$genre->getId().')">Edit</button><button onclick="deleteGenre('.$genre->getId().')">Delete</button></td>';
     }
     ?>
     </tbody>

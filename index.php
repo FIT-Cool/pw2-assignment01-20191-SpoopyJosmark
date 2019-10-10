@@ -1,9 +1,14 @@
 <?php
 session_start();
-include_once  'db_function/db_helper.php';
-include_once 'db_function/genre_func.php';
-include_once  'db_function/user_func.php';
-include_once 'util/view_util.php';
+//include_once  'db_function/db_helper.php';
+//include_once 'db_function/genre_func.php';
+//include_once  'db_function/user_func.php';
+//include_once 'util/view_util.php';
+include_once 'db_function/DBHelper.php';
+include_once 'db_function/GenreDao.php';
+include_once 'db_function/BookDao.php';
+include_once 'entity/Genre.php';
+include_once 'util/ViewUtil.php';
 
 if(!isset($_SESSION['user_logged']))
 {
@@ -20,8 +25,8 @@ if(!isset($_SESSION['user_logged']))
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Pemrograman Web 2</title>
-<!--    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jq-3.3.1/dt-1.10.18/datatables.min.css"/>-->
-<!--    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jq-3.3.1/dt-1.10.18/datatables.min.js"></script>-->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jq-3.3.1/dt-1.10.18/datatables.min.css"/>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jq-3.3.1/dt-1.10.18/datatables.min.js"></script>
     <script type="text/javascript" src="js/my_js.js"></script>
 </head>
 <body>

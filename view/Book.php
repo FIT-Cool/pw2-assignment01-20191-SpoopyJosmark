@@ -1,4 +1,7 @@
 <?php
+$bookDao = new BookDao();
+$genreDao = new GenreDao();
+
 $submitted = filter_input(INPUT_POST, 'btnSubmit');
 if (isset($submitted)) {
     $isbn = filter_input(INPUT_POST, 'txtISBN');
@@ -15,11 +18,28 @@ if (isset($submitted)) {
             $targetDirectory = 'uploads/';
             $targetFile = $targetDirectory . $isbn . '.' . pathinfo($_FILES['txtCover']['name'], PATHINFO_EXTENSION);
             move_uploaded_file($_FILES['txtCover']['tmp_name'], $targetFile);
-            addBook($isbn,$title,$author,$publisher,$publish_date,$genre, $synopsis, $targetFile);
+            $book = new Book();
+            $book->setIsbn($isbn);
+            $book->setTitle($title);
+            $book->setAuthor($author);
+            $book->setPublisher($publisher);
+            $book->setPublishDate($publish_date);
+            $book->setGenreId($genre);
+            $book->setSynopsis($synopsis);
+            $book->setCover($targetFile);
+            $bookDao->addBook($book);
         }
         else
         {
-            addBook($isbn,$title,$author,$publisher,$publish_date,$genre, $synopsis);
+            $book = new Book();
+            $book->setIsbn($isbn);
+            $book->setTitle($title);
+            $book->setAuthor($author);
+            $book->setPublisher($publisher);
+            $book->setPublishDate($publish_date);
+            $book->setGenreId($genre);
+            $book->setSynopsis($synopsis);
+            $bookDao->addBook($book);
         }
 //        var_dump($targetFile);
 //        $cover = filter_input(INPUT_POST, 'txtCover');
@@ -70,9 +90,10 @@ if (isset($submitted)) {
         <label  class="form-label">Genre</label>
         <select name="genre" id="">
             <?php
-            $genres = getAllGenre();
+            $genres = $genreDao->getAllGenre();
+            /* @var $genre Genre*/
             foreach ($genres as $genre) {
-                echo '<option value="'.$genre['id'].'">' . $genre['name'] . '</option>';
+                echo '<option value="'.$genre->getId().'">' . $genre->getName() . '</option>';
             }
             ?>
         </select>
@@ -96,26 +117,27 @@ if (isset($submitted)) {
     </thead>
     <tbody>
         <?php
-        $books = getAllBook();
+        $books = $bookDao->getAllBook();
+        /* @var $book Book*/
         foreach ($books as $book) {
             echo '<tr>';
-            echo '<td>' . $book['isbn'] . '</td>';
-            echo '<td>' . $book['title'] . '</td>';
-            echo '<td>' . $book['author'] . '</td>';
-            echo '<td>' . $book['publisher'] . '</td>';
+            echo '<td>' . $book->getIsbn() . '</td>';
+            echo '<td>' . $book->getTitle() . '</td>';
+            echo '<td>' . $book->getAuthor() . '</td>';
+            echo '<td>' . $book->getPublisher() . '</td>';
 
             echo '<td>' .
-                DateTime::createFromFormat('Y-m-d', $book['publish_date'])->format('d M Y')
+                DateTime::createFromFormat('Y-m-d', $book->getPublishDate())->format('d M Y')
                 . '</td>';
-            echo '<td>' . $book['name'] . '</td>';
-            if(isset($book['cover']) && file_exists($book['cover']))
-            {
-                echo '<td> <img src="'. $book['cover'] . '" width="50" alt="Cover" class="cover-list"> </td>';
-            }
-            else
-            {
-                echo '<td> </td>';
-            }
+            echo '<td>' . $book->getGenreId() . '</td>';
+//            if(isset($book['cover']) && file_exists($book['cover']))
+//            {
+                echo '<td> <img src="'. $book->getCover() . '" width="50" alt="Cover" class="cover-list"> </td>';
+//            }
+//            else
+//            {
+//                echo '<td> </td>';
+//            }
         }
         ?>
     </tbody>
