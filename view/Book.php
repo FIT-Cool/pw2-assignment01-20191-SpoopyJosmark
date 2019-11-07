@@ -1,60 +1,3 @@
-<?php
-$bookDao = new BookDao();
-$genreDao = new GenreDao();
-
-$submitted = filter_input(INPUT_POST, 'btnSubmit');
-if (isset($submitted)) {
-    $isbn = filter_input(INPUT_POST, 'txtISBN');
-    $title = filter_input(INPUT_POST, 'txtTitle');
-    $author = filter_input(INPUT_POST, 'txtAuthor');
-    $publisher = filter_input(INPUT_POST, 'txtPublisher');
-    $publish_date = filter_input(INPUT_POST, 'txtPublishDate');
-    $synopsis = filter_input(INPUT_POST, 'txtSynopsis');
-    $genre = filter_input(INPUT_POST, 'genre');
-
-    if(fieldNotEmpty(array($isbn,$synopsis,$author,$publisher,$publish_date,$genre))){
-        if(isset($_FILES['txtCover']['name']))
-        {
-            $targetDirectory = 'uploads/';
-            $targetFile = $targetDirectory . $isbn . '.' . pathinfo($_FILES['txtCover']['name'], PATHINFO_EXTENSION);
-            move_uploaded_file($_FILES['txtCover']['tmp_name'], $targetFile);
-            $book = new Book();
-            $book->setIsbn($isbn);
-            $book->setTitle($title);
-            $book->setAuthor($author);
-            $book->setPublisher($publisher);
-            $book->setPublishDate($publish_date);
-            $book->setGenreId($genre);
-            $book->setSynopsis($synopsis);
-            $book->setCover($targetFile);
-            $bookDao->addBook($book);
-        }
-        else
-        {
-            $book = new Book();
-            $book->setIsbn($isbn);
-            $book->setTitle($title);
-            $book->setAuthor($author);
-            $book->setPublisher($publisher);
-            $book->setPublishDate($publish_date);
-            $book->setGenreId($genre);
-            $book->setSynopsis($synopsis);
-            $bookDao->addBook($book);
-        }
-//        var_dump($targetFile);
-//        $cover = filter_input(INPUT_POST, 'txtCover');
-//        var_dump($cover);
-        header('location:index.php?menu=bk');
-    } else {
-        $errMessage = 'Please check your input';
-    }
-
-    if (isset($errMessage))
-    {
-        echo '<div class="err-msg">' . $errMessage . '</div>';
-    }
-}
-?>
 <form method="post" enctype="multipart/form-data">
     <fieldset>
         <legend>New Book</legend>
@@ -90,7 +33,6 @@ if (isset($submitted)) {
         <label  class="form-label">Genre</label>
         <select name="genre" id="">
             <?php
-            $genres = $genreDao->getAllGenre();
             /* @var $genre Genre*/
             foreach ($genres as $genre) {
                 echo '<option value="'.$genre->getId().'">' . $genre->getName() . '</option>';
@@ -117,7 +59,6 @@ if (isset($submitted)) {
     </thead>
     <tbody>
         <?php
-        $books = $bookDao->getAllBook();
         /* @var $book Book*/
         foreach ($books as $book) {
             echo '<tr>';
@@ -129,7 +70,7 @@ if (isset($submitted)) {
             echo '<td>' .
                 DateTime::createFromFormat('Y-m-d', $book->getPublishDate())->format('d M Y')
                 . '</td>';
-            echo '<td>' . $book->getGenreId() . '</td>';
+            echo '<td>' . $book->getGenre()->getName() . '</td>';
 //            if(isset($book['cover']) && file_exists($book['cover']))
 //            {
                 echo '<td> <img src="'. $book->getCover() . '" width="50" alt="Cover" class="cover-list"> </td>';

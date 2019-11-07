@@ -10,7 +10,7 @@ class Book
     private $publish_date;
     private $synopsis;
     private $cover;
-    private $genre_id;
+    private $genre;
 
     /**
      * @return mixed
@@ -125,22 +125,22 @@ class Book
     }
 
     /**
-     * @return mixed
+     * @return Genre
      */
-    public function getGenreId()
+    public function getGenre()
     {
-        if($this->genre_id == null)
-            $this->genre_id = new Genre();
+        if($this->genre == null)
+            $this->genre = new Genre();
 
-        return $this->genre_id;
+        return $this->genre;
     }
 
     /**
-     * @param mixed $genre_id
+     * @param mixed $genre
      */
-    public function setGenreId($genre_id)
+    public function setGenre($genre)
     {
-        $this->genre_id = $genre_id;
+        $this->genre = $genre;
     }
 
     public function __set($name, $value)
@@ -148,10 +148,10 @@ class Book
         switch($name)
         {
             case 'id':
-                $this->getGenreId()->setId($value);
+                $this->getGenre()->setId($value);
                 break;
             case 'name':
-                $this->getGenreId()->setName($value);
+                $this->getGenre()->setName($value);
                 break;
         }
     }

@@ -1,7 +1,7 @@
 <?php
 function login($username, $password)
 {
-    $link = createMySQLConnection();
+    $link = DBHelper::createMySQLConnection();
     $query = "SELECT id, username, name FROM user WHERE username = ? AND password = md5(?)";
     $statement = $link->prepare($query);
     $statement->bindParam(1, $username);

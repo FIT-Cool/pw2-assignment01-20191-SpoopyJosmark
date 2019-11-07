@@ -23,7 +23,7 @@ class BookDao
         $statement->bindValue(3,$book->getAuthor(),PDO::PARAM_STR);
         $statement->bindValue(4,$book->getPublisher(),PDO::PARAM_STR);
         $statement->bindValue(5,$book->getPublishDate(),PDO::PARAM_STR);
-        $statement->bindValue(6,$book->getGenreId(),PDO::PARAM_STR);
+        $statement->bindValue(6,$book->getGenre(),PDO::PARAM_STR);
         $statement->bindValue(7,$book->getSynopsis(),PDO::PARAM_STR);
         $statement->bindValue(8,$book->getCover(),PDO::PARAM_STR);
         if ($statement->execute()){
