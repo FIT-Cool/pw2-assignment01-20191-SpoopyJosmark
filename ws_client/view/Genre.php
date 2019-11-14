@@ -21,9 +21,9 @@
     /* @var $genre Genre */
     foreach ($genres as $genre) {
         echo '<tr>';
-        echo '<td>' . $genre->getId() . '</td>';
-        echo '<td>' . $genre->getName() . '</td>';
-        echo '<td><button onclick="updateGenre('.$genre->getId().')">Edit</button><button onclick="deleteGenre('.$genre->getId().')">Delete</button></td>';
+        echo '<td>' . $genre->id . '</td>';
+        echo '<td>' . $genre->name . '</td>';
+        echo '<td><button onclick="updateGenre('.$genre->id .')">Edit</button><button onclick="deleteGenre('.$genre->id .')">Delete</button></td>';
     }
     ?>
     </tbody>

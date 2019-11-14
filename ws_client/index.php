@@ -3,18 +3,19 @@ session_start();
 include_once 'Controller/GenreController.php';
 include_once 'Controller/BookController.php';
 include_once 'Controller/GenreUpdateController.php';
-include_once 'db_function/DBHelper.php';
-include_once 'db_function/GenreDao.php';
-include_once 'db_function/BookDao.php';
-include_once 'db_function/user_func.php';
-include_once 'entity/Genre.php';
-include_once 'entity/Book.php';
+//include_once 'db_function/DBHelper.php';
+//include_once 'db_function/GenreDao.php';
+//include_once 'db_function/BookDao.php';
+//include_once 'db_function/user_func.php';
+//include_once 'entity/Genre.php';
+//include_once 'entity/Book.php';
+include_once 'util/Utility.php';
 include_once 'util/ViewUtil.php';
 
-if(!isset($_SESSION['user_logged']))
-{
-    $_SESSION['user_logged'] = false;
-}
+//if(!isset($_SESSION['user_logged']))
+//{
+//    $_SESSION['user_logged'] = false;
+//}
 ?>
 <!doctype html>
 <html lang="en">
@@ -33,8 +34,8 @@ if(!isset($_SESSION['user_logged']))
 <body>
 <div class="page">
     <?php
-    if($_SESSION['user_logged'])
-    {
+//    if($_SESSION['user_logged'])
+//    {
         ?>
         <header>
             <h2>PHP Navigation 6 PDO</h2>
@@ -83,10 +84,10 @@ if(!isset($_SESSION['user_logged']))
             Pemrograman Web 2 &copy;2019
         </footer>
         <?php
-    } else
-    {
-        include_once 'view/Login.php';
-    }
+//    } else
+//    {
+//        include_once 'view/Login.php';
+//    }
     ?>
 </div>
 </body>

@@ -1,7 +1,7 @@
 <?php
 
 
-class Genre
+class Genre implements JsonSerializable
 {
     private $id;
     private $name;
@@ -37,6 +37,9 @@ class Genre
     {
         $this->name = $name;
     }
-
+    public function jsonSerialize()
+    {
+        return get_object_vars($this);
+    }
 
 }

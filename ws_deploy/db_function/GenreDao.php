@@ -22,10 +22,13 @@ class GenreDao
         $statement->bindValue(1, $genre->getName(), PDO::PARAM_STR);
         if ($statement->execute()) {
             $link->commit();
+            $result = 1;
         } else {
             $link->rollBack();
+            $result = 0;
         }
         $link = null;
+        return $result;
     }
 
     public function deleteGenre(Genre $genre)

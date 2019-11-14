@@ -3,12 +3,12 @@
 
 class GenreController
 {
-    private $genreDao;
-
-    public function __construct()
-    {
-        $this->genreDao = new GenreDao();
-    }
+//    private $genreDao;
+//
+//    public function __construct()
+//    {
+//        $this->genreDao = new GenreDao();
+//    }
 
     public function index()
     {
@@ -25,11 +25,14 @@ class GenreController
         $submitted = filter_input(INPUT_POST, 'btnSubmit');
         if (isset($submitted)) {
             $name = filter_input(INPUT_POST, 'txtName');
-            $genre = new Genre();
-            $genre->setName($name);
-            $this->genreDao->addGenre($genre);
+            Utility::curl_post('http://localhost/ws_deploy/service/add_genre_service.php', array('txtName' => $name));
+//            $genre = new Genre();
+//            $genre->setName($name);
+//            $this->genreDao->addGenre($genre);
         }
-        $genres = $this->genreDao->getAllGenre();
+        $dataFromWS = Utility::curl_get('http://localhost/ws_deploy/service/get_all_genre_service.php', array());
+        $genres = json_decode($dataFromWS);
+        var_dump($genres);
         include_once 'view/Genre.php';
     }
 }
