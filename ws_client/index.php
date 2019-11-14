@@ -3,19 +3,9 @@ session_start();
 include_once 'Controller/GenreController.php';
 include_once 'Controller/BookController.php';
 include_once 'Controller/GenreUpdateController.php';
-//include_once 'db_function/DBHelper.php';
-//include_once 'db_function/GenreDao.php';
-//include_once 'db_function/BookDao.php';
-//include_once 'db_function/user_func.php';
-//include_once 'entity/Genre.php';
-//include_once 'entity/Book.php';
 include_once 'util/Utility.php';
 include_once 'util/ViewUtil.php';
 
-//if(!isset($_SESSION['user_logged']))
-//{
-//    $_SESSION['user_logged'] = false;
-//}
 ?>
 <!doctype html>
 <html lang="en">
